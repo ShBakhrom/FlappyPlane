@@ -259,7 +259,8 @@ class FlappyPlane extends Phaser.Scene {
         for (var i = 0; i < this.numberOfActiveRings; i++) {
             let firstRing = this.firstHalfArray[i];
             let secondRing = this.secondHalfArray[i];
-            if (firstRing.y < - 50 || firstRing.y > - 770) {
+            if (firstRing.y < -100 || firstRing.y > 800) {
+                console.log("r");
                 this.sendTheRingBack(firstRing, secondRing);
                 i--;
             }else{
@@ -318,6 +319,7 @@ class FlappyPlane extends Phaser.Scene {
             this.firstHalfArray[i].y = yPos;
             this.firstHalfArray[i].x = 1300 + (i * 100);
             this.secondHalfArray[i].y = yPos;
+            this.secondHalfArray[i].x = 1300 + (i * 100);
         }
         this.numberOfActiveRings = Phaser.Math.Between(1, this.maxNumberOfRings);
         if (this.numberOfActiveRings == this.maxNumberOfRings){
@@ -339,9 +341,11 @@ class FlappyPlane extends Phaser.Scene {
         secondRing.body.velocity.y = 0;
         if (this.numberOfActiveRings < this.firstHalfArray.length) {
             let lastRingX = this.firstHalfArray[this.firstHalfArray.length-1].x;
+            //secondRing.x = secondRing + 100;
             firstRing.x = lastRingX + 100;
         }else{
             firstRing.x = 1300;
+            //secondRing.x = 1300;
         }
         this.firstHalfArray.splice(this.firstHalfArray.length, 0, this.firstHalfArray[0]);
         this.firstHalfArray.shift();
@@ -356,44 +360,3 @@ class FlappyPlane extends Phaser.Scene {
     }
     
 }
-/*
-    4X ground
-    generateArrayOfTiles = function() {
-        //Ground Setup
-        this.grnd1 = this.add.image(160, 670, 'grnd');
-        this.grnd2 = this.add.image(480, 670, 'grnd');
-        this.grnd3 = this.add.image(800, 670, 'grnd');
-        this.grnd4 = this.add.image(1120, 670, 'grnd');
-        this.grnd5 = this.add.image(1440, 670, 'grnd');
-        this.groundTiles = [this.grnd1, this.grnd2, this.grnd3, this.grnd4, this.grnd5];
-    }
-    
-    UPDATE
-    for (var i = 0; i < 5; i++) {
-                if (this.groundTiles[i].x < -158 )
-                    this.groundTiles[i].x = 1438;
-                else
-                    this.groundTiles[i].x -= 3 * this.movementSpeed;
-            }
-            
-            
-            
-            generateNewCoin = function() {
-        let coin = this.physics.add.image(1400, Phaser.Math.Between(150, 550), 'storecoin');
-        this.coins.push(coin);
-        this.coinCount ++;
-        let timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(1500, 5500), callback: this.generateNewCoin, callbackScope: this, loop: false });
-    }
-    for (var i = 0; i < this.coinCount; i++) {
-                if (this.physics.overlap(this.plane, this.coins[i])) {
-                    // Call the new hit() method
-                    this.coins[i].destroy();
-                    this.score += 1;
-                    this.scoreLabel.text = this.score;
-                    //this.plane.destroy();
-                    //this.restartTheGame();
-                }
-                else
-                    this.coins[i].x -= this.pixelsPerFrame * this.movementSpeed;
-                }
-*/
