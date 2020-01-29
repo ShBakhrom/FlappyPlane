@@ -134,6 +134,7 @@ class FlappyPlane extends Phaser.Scene {
         this.landing = false;
         this.movementSpeed = 1.0;
         this.scoreLabel.text = 0;
+        this.score = 0;
     }
     
     generateSceneElements = function() {
@@ -258,7 +259,7 @@ class FlappyPlane extends Phaser.Scene {
         for (var i = 0; i < this.numberOfActiveRings; i++) {
             let firstRing = this.firstHalfArray[i];
             let secondRing = this.secondHalfArray[i];
-            if (firstRing.x < -20) {
+            if (firstRing.y < - 50 || firstRing.y > - 770) {
                 this.sendTheRingBack(firstRing, secondRing);
                 i--;
             }else{
